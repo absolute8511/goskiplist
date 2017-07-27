@@ -529,6 +529,16 @@ func New() *SkipList {
 // NewIntKey returns a SkipList that accepts int keys.
 func NewIntMap() *SkipList {
 	return NewCustomMap(func(l, r interface{}) bool {
+		switch v := l.(type) {
+		case int:
+			return v < r.(int)
+		case int64:
+			return v < r.(int64)
+		case int32:
+			return v < r.(int32)
+		case int16:
+			return v < r.(int16)
+		}
 		return l.(int) < r.(int)
 	})
 }
